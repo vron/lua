@@ -11,7 +11,6 @@ package lua
 import "C"
 
 import (
-	"fmt"
 	"unsafe"
 )
 
@@ -22,10 +21,6 @@ const (
 )
 
 type State C.lua_State
-
-func Test() {
-	fmt.Println(int(C.random()))
-}
 
 func Newstate() *State {
 	return (*State)(C.luaL_newstate())

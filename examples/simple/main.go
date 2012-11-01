@@ -6,28 +6,25 @@ import (
 )
 
 var code = `
-io.write("sdfsadf\n");
+io.write("Hi from Lua\n");
 x = 0
 for i = 1, #foo do
 	print(i, ,foo[i])
 	x = x + foo[i]
 end
-io.write("kjkjkjkjkjjk\n")
+io.write("By from Lua\n")
 return x
 `
 
 func main() {
-	lua.Test()
 	a := lua.Newstate()
 	lua.Openlibs(a)
-
 	status := lua.Loadstring(a, code)
 	if status != 0 {
 		fmt.Println("Error: ", lua.Tostring(a,-1))
 		return
 	}
 	lua.Createtable(a,10,10)
-
 	for i:=1.0; i<=5; i++ {
 		lua.Pushnumber(a,i)
 		lua.Pushnumber(a,i*2)
