@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/vron/lua/core"
+	"github.com/vron/lua/lua"
 )
 
 var code = `
@@ -17,36 +17,36 @@ return x
 `
 
 func main() {
-	core.Test()
-	a := core.Newstate()
-	core.Openlibs(a)
+	lua.Test()
+	a := lua.Newstate()
+	lua.Openlibs(a)
 
-	status := core.Loadstring(a, code)
+	status := lua.Loadstring(a, code)
 	if status != 0 {
-		fmt.Println("Error: ", core.Tostring(a,-1))
+		fmt.Println("Error: ", lua.Tostring(a,-1))
 		return
 	}
-	core.Createtable(a,10,10)
+	lua.Createtable(a,10,10)
 
 	for i:=1.0; i<=5; i++ {
-		core.Pushnumber(a,i)
-		core.Pushnumber(a,i*2)
-		core.Rawset(a,-3)
+		lua.Pushnumber(a,i)
+		lua.Pushnumber(a,i*2)
+		lua.Rawset(a,-3)
 	}
 
-	core.Setglobal(a, "foo")
+	lua.Setglobal(a, "foo")
 
-	result := core.Pcall(a,0, core.MULTRET, 0)
+	result := lua.Pcall(a,0, lua.MULTRET, 0)
 	if (result != 0) {
 		fmt.Println("Error 2")
 		return
 	}
 
-	sum := core.Tonumber(a,-1)
+	sum := lua.Tonumber(a,-1)
 
 	fmt.Println(sum)
 
-	core.Close(a)
+	lua.Close(a)
 
 	fmt.Println(a)
 }
